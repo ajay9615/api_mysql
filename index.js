@@ -7,7 +7,6 @@ app.post('/newTeacher', (request, response) => {
     if (!name || !email) {
         return res.status(400).json({ message: "Please provide name and email" });
     }
-
     const sql = "INSERT INTO teachers (name, email) VALUES (?,?)";
 
     db.query(sql, [name, email], (error, result) => {
