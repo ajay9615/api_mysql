@@ -92,6 +92,43 @@ app.delete('/deleteStudent/:name', (request, response) => {
         });
     })
 });
+
+// Register with Email & Password
+
+app.post('/register-email', (request, response) => {
+    const { name, email, address, password } = request.body;
+    const sql = "INSERT INTO teachers(name,email,address,password) VALUES (?,?,?,?)";
+    db.query(sql, [name, email, address, password], (error, result) => {
+        if (error) {
+            console.log("Internal problems :" + error);
+        }
+        else {
+            response.status(201).json({
+                message: "New Teacher Registered Successfully",
+                teacher: result
+            });
+        }
+    })
+
+})
+// Login with Email & Password
+
+app.post('/login-email', (request, response) => {
+    const { email, password } = request.body;
+    const sql = "SELECT * FROM teachers WHERE email=? AND password=?";
+    db.query(sql, [email, password], (error, result) => {
+        if (error) {
+            console.log("Internal problems :" + error);
+        }
+        else {
+            response.status(201).json({
+                message: "Login Successfully",
+                teacher: result
+            });
+        }
+    })
+
+})
 app.listen(3000, () => {
     console.log("Server is running...");
 });
